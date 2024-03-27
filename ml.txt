@@ -1,0 +1,48 @@
+from math import exp
+
+
+def fit (xvalues, yvalues):
+    """
+    Fits the data and returns the parameter in a tuple
+    Currently returns hard-coded values as a mock(something that is not true)
+    TODO: Implement logistic regression.
+
+    Inputs
+    -------
+    xvalues: the independent variable
+    yvalues: the dependent variable
+
+    Returns
+    -------
+
+    A tuple of parameters obtained in the fit.
+    """
+    slope, intercept = (9.812037170985635, 5.175316482607568)
+    return slope, intercept
+
+
+
+def predict_proba_maker(slope, intercept):
+    "makes a function that returns probabilities"
+    def inner(xvalues):
+        "returns probabilities given the independent variable"
+        #return probabilities using the sigmoid function
+        probabilities = [1/(1 +exp(-(intercept + slope*xvalues))) for x in xvalues]
+        return probabilities
+    return inner
+predict_proba=predict_proba_maker(slope, intercept)
+
+
+
+def predict_maker(slope, intercept):
+    "makes a prediction function"
+    def inner(xvalues, y=0.5):
+        "predicts 1 or 0 for a threshold t, default 0.5"
+        predict_proba=predict_proba_maker(slope, intercept)
+        probabilities=predict_proba(xvalues)
+        #compare to threshold t..1*false gives you 0
+        predictions=[1*(p>=t) for p in probabilities]
+        return predictions
+    return inner
+predict=predict_maker(slope, intercept)
+predict(xvals)
