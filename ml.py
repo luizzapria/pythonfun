@@ -89,6 +89,7 @@ def model():
     return methods
 
 class AbstractModel:
+    RUNNABLE=False
     def __init__(self):
         self.predictions=None
         self.probabilities=None
@@ -108,6 +109,7 @@ class AbstractModel:
         
         
 class LogisticModel(AbstractModel):
+    RUNNABLE=True
     def __init__(self):
         super().__init__()
         self.slope=None
